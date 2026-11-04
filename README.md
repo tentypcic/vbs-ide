@@ -1,5 +1,7 @@
 # VBS IDE
 
+<p align="center"><img src="docs/overview.jpg" alt="VBS IDE running a WinCC recipe CSV import" width="960"></p>
+
 <p align="center">Built with <strong>HTML, CSS and JavaScript</strong>.<br><a href="https://tentypcic.github.io/vbs-ide/">Open the app</a> · <a href="https://github.com/tentypcic/vbs-ide/issues">Report Bug</a></p>
 
 ## 🧠 About The Project
