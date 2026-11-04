@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Write and step through Siemens WinCC VBScript with simulated SmartTags and files.">
+  <meta name="theme-color" content="#151819">
+  <title>VBS IDE · WinCC Script Workbench</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <script type="module" src="src/app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="icon.svg" alt=""><span>VBS <b>IDE</b><small>WINCC SCRIPT WORKBENCH</small></span></div>
+    <span class="target"><i></i> RT Advanced <span>· Simulator</span></span>
+    <nav aria-label="Workspace">
+      <button id="theme" title="Switch color theme" aria-label="Switch color theme">◐ <span>Theme</span></button>
+      <button id="help">Guide ↗</button>
+      <a class="button" href="https://github.com/tentypcic/vbs-ide">GitHub ↗</a>
+    </nav>
+  </header>
+  <main class="workbench">
+    <aside class="explorer" aria-label="Explorer">
+      <div class="panel-title"><span>EXPLORER</span><button id="new-script" title="New script" aria-label="New script">＋</button></div>
+      <div class="section-label">SCRIPTS</div>
+      <ul id="scripts" class="items"></ul>
+      <div class="side-actions"><button id="import-script">↑ Open .vbs</button><button id="load-sample">↺ Example</button></div>
+      <div class="panel-title files-title"><span>VIRTUAL FILES</span><button id="new-file" title="New virtual text file" aria-label="New virtual text file">＋</button></div>
+      <ul id="files" class="items file-list"></ul>
+      <div class="side-actions"><button id="import-file">↑ Upload file</button></div>
+      <p class="hint">Map your CSV or text files to the Windows paths used by your script.</p>
+      <footer class="credit">Created by <a href="https://github.com/tentypcic">tentypcic</a></footer>
+    </aside>
+    <section class="center" aria-label="Script editor and console">
+      <div class="toolbar" aria-label="Execution controls">
+        <button id="run" class="primary" title="Run / Pause (F5)">▶ Run</button>
+        <button id="step" title="Step into (F10)">↳ Step</button>
+        <button id="stop" title="Stop (Shift+F5)" disabled>■ Stop</button>
+        <button id="check" title="Check syntax (Ctrl+Enter)">✓ Check</button>
+        <label class="entry">Entry <input id="entry" placeholder="Script body" spellcheck="false" title="Optional name of a parameterless Sub or Function"></label>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><span class="vb">VB</span><strong id="script-name"></strong></div>
+        <div class="tab-actions">
+          <button id="rename-script">Rename</button>
+          <button id="format" title="Format indentation (Shift+Alt+F)">Format</button>
+          <button id="download-script" title="Download script" aria-label="Download script">↓</button>
+        </div>
+      </div>
+      <div id="surface">
+        <div id="gutter" aria-label="Line numbers and breakpoints"></div>
+        <div class="code">
+          <pre id="highlight" aria-hidden="true"></pre>
+          <textarea id="editor" aria-label="VBScript source" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+          <ul id="suggest" aria-label="Completions" hidden></ul>
+        </div>
+      </div>
+      <section class="console" aria-label="Output console">
+        <div class="panel-title"><span>CONSOLE</span><button id="clear">Clear</button></div>
+        <div id="output" role="log" aria-label="Run output"></div>
+      </section>
+    </section>
+    <aside class="inspector" aria-label="Runtime inspector">
+      <div class="panel-title"><span>SMARTTAGS</span><button id="new-tag" title="Add SmartTag" aria-label="Add SmartTag">＋</button></div>
+      <p class="hint">Edit values before or during a run.</p>
+      <div id="tags" class="tag-list"></div>
+      <div class="panel-title variables-title"><span>VARIABLES</span><span id="scope">—</span></div>
+      <dl id="variables"></dl>
+    </aside>
+  </main>
+  <footer class="statusbar"><span id="status" role="status">Loading workspace</span><span id="cursor">Ln 1, Col 1</span><span id="saved">Local workspace</span><span>VBScript</span></footer>
+  <input type="file" id="script-picker" accept=".vbs,.txt,text/plain" hidden>
+  <input type="file" id="file-picker" hidden>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <form id="dialog-form">
+      <div class="dialog-head"><h2 id="dialog-title"></h2><button id="dialog-close" type="button" aria-label="Close">×</button></div>
+      <div id="dialog-body"></div>
+      <p id="dialog-error" role="alert"></p>
+      <div id="dialog-actions"></div>
+    </form>
+  </dialog>
+</body>
+</html>
