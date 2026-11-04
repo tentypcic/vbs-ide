@@ -218,6 +218,7 @@ function selectScript(id) {
   const item = script();
   $("script-name").textContent = item.name;
   editor.value = item.source;
+  editor.setSelectionRange(0, 0);
   $("entry").value = item.entry;
   editor.scrollTop = editor.scrollLeft = 0;
   renderScripts();
@@ -281,14 +282,24 @@ function renderTags() {
     label.htmlFor = input.id;
     input.value = tagText(value);
     input.title = 'Enter a number, True, False, Empty, Null or text. Quote text to preserve its type.';
-    input.onchange = () => {
-      try {
-        tags.set(name, tagValue(input.value));
-        input.value = tagText(tags.get(name));
-        persist();
-      } catch (error) { status(error.message, true); input.value = tagText(tags.get(name)); }
+    let initial = input.value;
+    input.onfocus = () => { initial = input.value; };
+    input.onblur = () => {
+      if (input.value !== initial) {
+        try {
+          tags.set(name, tagValue(input.value));
+          persist();
+        } catch (error) { status(error.message, true); }
+      }
+      input.value = tagText(tags.get(name));
     };
-    input.onkeydown = event => { if (event.key === "Enter") input.blur(); };
+    input.onkeydown = event => {
+      if (event.key === "Escape") input.value = initial;
+      if (event.key === "Enter" || event.key === "Escape") {
+        event.preventDefault();
+        input.blur();
+      }
+    };
     const remove = button("×", () => { tags.delete(name); renderTags(); persist(); });
     remove.setAttribute("aria-label", `Remove SmartTag ${name}`);
     wrap.append(label, remove, input);
